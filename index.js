@@ -24,7 +24,10 @@ var simulateBattle = function (){
         if (turn == 0) {
             damage = calculateDamage(charOne, charTwo);
             if (damage > 0) {
-                console.log("charOne damaged " + damage);
+                if (damage > charTwo.health)
+                    console.log("charOne caused a critical damage (" + damage + ")");
+                else
+                    console.log("charOne damaged " + damage);
                 charTwo.health -= damage;
             }
             else
@@ -33,7 +36,10 @@ var simulateBattle = function (){
         else {
             damage = calculateDamage(charTwo, charOne);
             if (damage > 0) {
-                console.log("charTwo damaged " + damage);
+                if (damage > charOne.health)
+                    console.log("charTwo caused a critical damage (" + damage + ")");
+                else
+                    console.log("charTwo damaged " + damage);
                 charOne.health -= damage;
             }
             else
