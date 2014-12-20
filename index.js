@@ -1,11 +1,38 @@
-var generateAttributes = function (){
+var generateAttributes = function (charName,maxPoints){
+	var resistancePoints = 1, max;
+
+	if (maxPoints > 0) {
+		max = (maxPoints < 5) ? maxPoints : 5;
+		strengthPoints = Math.floor(Math.random()*max+1)+1;
+		maxPoints -= strengthPoints;
+	}
+	else
+		strengthPoints = 0;
+
+	if (maxPoints > 0) {
+		max = (maxPoints < 5) ? maxPoints : 5;
+		armorPoints = Math.floor(Math.random()*max+1)+1;
+		maxPoints -= armorPoints;
+	}
+	else
+		armorPoints = 0;
+
+	if (maxPoints > 0) {
+		max = (maxPoints < 5) ? maxPoints : 5;
+		resistancePoints = Math.floor(Math.random()*max+1)+1;
+		maxPoints -= resistancePoints;
+	}
+
+	healthPoints = resistancePoints*5;
+
 	var character = {
-		strength: Math.floor(Math.random()*6)+1,
-		armor: Math.floor(Math.random()*6)+1,
-		resistance: Math.floor(Math.random()*6)+1,
-		health: 0
+		name: charName,
+		strength: strengthPoints,
+		armor: armorPoints,
+		resistance: resistancePoints,
+		health: healthPoints
 	};
-	character.health = character.resistance*5;
+	console.log(character);
 	return character;
 }
 
@@ -14,11 +41,10 @@ var calculateDamage = function (charOne, charTwo){
     return totalDamage;
 }
 
-var simulateBattle = function (){
-	var charOne = generateAttributes(), charTwo = generateAttributes(), turn = 0;
-	console.log(charOne);
-	console.log(charTwo);
-	
+var simulateBattle = function (oneName, oneMaxPoints, twoName, twoMaxPoints){
+	var charOne = generateAttributes(oneName.value, oneMaxPoints.value-1),
+		charTwo = generateAttributes(twoName.value, twoMaxPoints.value-1),
+		turn = 0;
     
     while(charOne.health > 0 && charTwo.health > 0) {
         if (turn == 0) {
@@ -43,7 +69,7 @@ var simulateBattle = function (){
     }
     
     if (charTwo.health < 0)
-        console.log("* charOne");
+        console.log("* " + charOne.name);
     else
-        console.log("* charTwo");
+        console.log("* " + charTwo.name);
 }
